@@ -123,6 +123,7 @@ public class MDINomina extends javax.swing.JFrame {
         jifListarEmpleados = new javax.swing.JInternalFrame();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblEmpleados = new javax.swing.JTable();
+        jifRegistrarEmpleado = new javax.swing.JInternalFrame();
         menuBar = new javax.swing.JMenuBar();
         mnuArchivo = new javax.swing.JMenu();
         mnuListarEmpleados = new javax.swing.JMenuItem();
@@ -219,7 +220,7 @@ public class MDINomina extends javax.swing.JFrame {
             .addGroup(jifListarEmpleadosLayout.createSequentialGroup()
                 .addGap(55, 55, 55)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 469, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(205, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jifListarEmpleadosLayout.setVerticalGroup(
             jifListarEmpleadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -231,6 +232,24 @@ public class MDINomina extends javax.swing.JFrame {
 
         desktopPane.add(jifListarEmpleados);
         jifListarEmpleados.setBounds(100, 30, 490, 390);
+
+        jifRegistrarEmpleado.setTitle("Registrar Empleado");
+        jifRegistrarEmpleado.setToolTipText("");
+        jifRegistrarEmpleado.setVisible(true);
+
+        javax.swing.GroupLayout jifRegistrarEmpleadoLayout = new javax.swing.GroupLayout(jifRegistrarEmpleado.getContentPane());
+        jifRegistrarEmpleado.getContentPane().setLayout(jifRegistrarEmpleadoLayout);
+        jifRegistrarEmpleadoLayout.setHorizontalGroup(
+            jifRegistrarEmpleadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jifRegistrarEmpleadoLayout.setVerticalGroup(
+            jifRegistrarEmpleadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        desktopPane.add(jifRegistrarEmpleado);
+        jifRegistrarEmpleado.setBounds(180, 20, 440, 340);
 
         mnuArchivo.setMnemonic('f');
         mnuArchivo.setText("Inicio");
@@ -348,6 +367,7 @@ public class MDINomina extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JInternalFrame jifListarEmpleados;
     private javax.swing.JInternalFrame jifLogin;
+    private javax.swing.JInternalFrame jifRegistrarEmpleado;
     private javax.swing.JLabel lblContrasenia;
     private javax.swing.JLabel lblUsuario;
     private javax.swing.JMenuBar menuBar;
