@@ -124,6 +124,8 @@ public class MDINomina extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblEmpleados = new javax.swing.JTable();
         jifRegistrarEmpleado = new javax.swing.JInternalFrame();
+        btnRegistrar = new javax.swing.JButton();
+        txtNombre = new javax.swing.JTextField();
         menuBar = new javax.swing.JMenuBar();
         mnuArchivo = new javax.swing.JMenu();
         mnuListarEmpleados = new javax.swing.JMenuItem();
@@ -237,15 +239,30 @@ public class MDINomina extends javax.swing.JFrame {
         jifRegistrarEmpleado.setToolTipText("");
         jifRegistrarEmpleado.setVisible(true);
 
+        btnRegistrar.setText("Registrar");
+
         javax.swing.GroupLayout jifRegistrarEmpleadoLayout = new javax.swing.GroupLayout(jifRegistrarEmpleado.getContentPane());
         jifRegistrarEmpleado.getContentPane().setLayout(jifRegistrarEmpleadoLayout);
         jifRegistrarEmpleadoLayout.setHorizontalGroup(
             jifRegistrarEmpleadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(jifRegistrarEmpleadoLayout.createSequentialGroup()
+                .addGroup(jifRegistrarEmpleadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jifRegistrarEmpleadoLayout.createSequentialGroup()
+                        .addGap(113, 113, 113)
+                        .addComponent(btnRegistrar))
+                    .addGroup(jifRegistrarEmpleadoLayout.createSequentialGroup()
+                        .addGap(96, 96, 96)
+                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(115, Short.MAX_VALUE))
         );
         jifRegistrarEmpleadoLayout.setVerticalGroup(
             jifRegistrarEmpleadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jifRegistrarEmpleadoLayout.createSequentialGroup()
+                .addContainerGap(158, Short.MAX_VALUE)
+                .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32)
+                .addComponent(btnRegistrar)
+                .addGap(77, 77, 77))
         );
 
         desktopPane.add(jifRegistrarEmpleado);
@@ -363,6 +380,7 @@ public class MDINomina extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnIngresar;
+    private javax.swing.JButton btnRegistrar;
     private javax.swing.JDesktopPane desktopPane;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JInternalFrame jifListarEmpleados;
@@ -379,6 +397,7 @@ public class MDINomina extends javax.swing.JFrame {
     private javax.swing.JTable tblEmpleados;
     private javax.swing.JPasswordField txtContrasenia;
     private javax.swing.JTextField txtCorreo;
+    private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
 
 }
