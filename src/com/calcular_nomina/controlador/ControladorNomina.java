@@ -31,6 +31,7 @@ public class ControladorNomina {
     {
         empleados[0]= new Vigilante("1111111","Ramón Roncancio",
                     1200000,false);
+        contEmpleados++;
     }
     
     public String adicionarEmpleado(Empleado emp)

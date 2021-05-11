@@ -10,7 +10,9 @@ import com.calcular_nomina.controlador.ControladorUsuario;
 import com.calcular_nomina.excepciones.UsuarioExcepcion;
 import com.calcular_nomina.modelo.Empleado;
 import com.calcular_nomina.modelo.Usuario;
+import com.calcular_nomina.modelo.Vigilante;
 import java.awt.TrayIcon;
+import java.beans.PropertyVetoException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -235,11 +237,21 @@ public class MDINomina extends javax.swing.JFrame {
         desktopPane.add(jifListarEmpleados);
         jifListarEmpleados.setBounds(100, 30, 490, 390);
 
+        jifRegistrarEmpleado.setClosable(true);
+        jifRegistrarEmpleado.setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
+        jifRegistrarEmpleado.setIconifiable(true);
+        jifRegistrarEmpleado.setMaximizable(true);
+        jifRegistrarEmpleado.setResizable(true);
         jifRegistrarEmpleado.setTitle("Registrar Empleado");
         jifRegistrarEmpleado.setToolTipText("");
-        jifRegistrarEmpleado.setVisible(true);
+        jifRegistrarEmpleado.setVisible(false);
 
         btnRegistrar.setText("Registrar");
+        btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jifRegistrarEmpleadoLayout = new javax.swing.GroupLayout(jifRegistrarEmpleado.getContentPane());
         jifRegistrarEmpleado.getContentPane().setLayout(jifRegistrarEmpleadoLayout);
@@ -251,16 +263,16 @@ public class MDINomina extends javax.swing.JFrame {
                         .addGap(113, 113, 113)
                         .addComponent(btnRegistrar))
                     .addGroup(jifRegistrarEmpleadoLayout.createSequentialGroup()
-                        .addGap(96, 96, 96)
+                        .addGap(88, 88, 88)
                         .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(115, Short.MAX_VALUE))
+                .addContainerGap(128, Short.MAX_VALUE))
         );
         jifRegistrarEmpleadoLayout.setVerticalGroup(
             jifRegistrarEmpleadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jifRegistrarEmpleadoLayout.createSequentialGroup()
-                .addContainerGap(158, Short.MAX_VALUE)
+                .addGap(38, 38, 38)
                 .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 132, Short.MAX_VALUE)
                 .addComponent(btnRegistrar)
                 .addGap(77, 77, 77))
         );
@@ -283,6 +295,11 @@ public class MDINomina extends javax.swing.JFrame {
 
         mnuCrearEmpleado.setMnemonic('s');
         mnuCrearEmpleado.setText("Crear Empleado");
+        mnuCrearEmpleado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuCrearEmpleadoActionPerformed(evt);
+            }
+        });
         mnuArchivo.add(mnuCrearEmpleado);
 
         mnuCalcularNomina.setMnemonic('a');
@@ -339,9 +356,42 @@ public class MDINomina extends javax.swing.JFrame {
 
     private void mnuListarEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuListarEmpleadosActionPerformed
         // TODO add your handling code here:
+        if(jifListarEmpleados.isIcon())
+        {
+            try {
+                jifListarEmpleados.setIcon(false);
+            } catch (PropertyVetoException ex) {
+                System.out.println("No se pudo restaurar el formulario listar empleados");
+            }
+        }
+        
         jifListarEmpleados.show();
         
     }//GEN-LAST:event_mnuListarEmpleadosActionPerformed
+
+    private void mnuCrearEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuCrearEmpleadoActionPerformed
+        // TODO add your handling code here:
+        if(jifRegistrarEmpleado.isIcon())
+        {
+            try {
+                jifRegistrarEmpleado.setIcon(Boolean.FALSE);
+            } catch (PropertyVetoException ex) {
+                System.out.println("NO se encontraba minimizado");
+            }
+        }
+        jifRegistrarEmpleado.show();
+        
+    }//GEN-LAST:event_mnuCrearEmpleadoActionPerformed
+
+    private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
+        // TODO add your handling code here:
+        Empleado raul = new Vigilante("1053873317","Raúl Carmona",1300000,false);
+        
+       String mensaje= controlNomina.adicionarEmpleado(raul);
+       llenarEmpleados();
+       JOptionPane.showMessageDialog(rootPane, mensaje);
+        
+    }//GEN-LAST:event_btnRegistrarActionPerformed
 
     /**
      * @param args the command line arguments
