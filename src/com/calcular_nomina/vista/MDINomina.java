@@ -9,6 +9,8 @@ import com.calcular_nomina.controlador.ControladorNomina;
 import com.calcular_nomina.controlador.ControladorUsuario;
 import com.calcular_nomina.excepciones.UsuarioExcepcion;
 import com.calcular_nomina.modelo.Empleado;
+import com.calcular_nomina.modelo.Operario;
+import com.calcular_nomina.modelo.Supervisor;
 import com.calcular_nomina.modelo.Usuario;
 import com.calcular_nomina.modelo.Vigilante;
 import java.awt.TrayIcon;
@@ -39,7 +41,34 @@ public class MDINomina extends javax.swing.JFrame {
         txtCorreo.setText("carloaiza@umanizales.edu.co");
         txtContrasenia.setText("123456");
         llenarEmpleados();
+        cmbTipoEmpleado.setSelectedIndex(0);
+        evaluarComboTipoEmpleado();
     }
+    
+    private void evaluarComboTipoEmpleado()
+    {
+        //Posición del combo seleccionada
+        switch(cmbTipoEmpleado.getSelectedIndex())
+        {
+            case 0:
+            case 2:
+                lblHorasTrabajadas.setVisible(false);
+                spnHorasTrabajadas.setVisible(false);
+                spnHorasTrabajadas.setValue(0); 
+                lblSalario.setVisible(true);
+                txtSalario.setVisible(true);
+                break;
+            case 1:
+                lblHorasTrabajadas.setVisible(true);
+                spnHorasTrabajadas.setVisible(true);
+                spnHorasTrabajadas.setValue(0);                
+                lblSalario.setVisible(false);
+                txtSalario.setVisible(false);
+                break;
+        }
+        
+    }
+    
     
     private void llenarEmpleados()
     {
@@ -59,7 +88,7 @@ public class MDINomina extends javax.swing.JFrame {
             if(emp!=null)
             {
                 Object[] fila = {emp.getCedula(),emp.getNombre(),
-                emp.getSalario(),emp.isLicencia()};
+                emp.getSalario(),emp.isLicencia(), emp.getClass().getSimpleName()};
                 model.addRow(fila);
             }
         }
@@ -128,6 +157,16 @@ public class MDINomina extends javax.swing.JFrame {
         jifRegistrarEmpleado = new javax.swing.JInternalFrame();
         btnRegistrar = new javax.swing.JButton();
         txtNombre = new javax.swing.JTextField();
+        lblNombre = new javax.swing.JLabel();
+        lblCedula = new javax.swing.JLabel();
+        txtCedula = new javax.swing.JTextField();
+        lblSalario = new javax.swing.JLabel();
+        txtSalario = new javax.swing.JTextField();
+        chkLicencia = new javax.swing.JCheckBox();
+        lblTipoEmpleado = new javax.swing.JLabel();
+        cmbTipoEmpleado = new javax.swing.JComboBox<>();
+        lblHorasTrabajadas = new javax.swing.JLabel();
+        spnHorasTrabajadas = new javax.swing.JSpinner();
         menuBar = new javax.swing.JMenuBar();
         mnuArchivo = new javax.swing.JMenu();
         mnuListarEmpleados = new javax.swing.JMenuItem();
@@ -197,6 +236,7 @@ public class MDINomina extends javax.swing.JFrame {
         jifListarEmpleados.setMaximizable(true);
         jifListarEmpleados.setResizable(true);
         jifListarEmpleados.setTitle("Listado de Empleados");
+        jifListarEmpleados.setPreferredSize(new java.awt.Dimension(1024, 900));
         jifListarEmpleados.setVisible(false);
 
         tblEmpleados.setModel(new javax.swing.table.DefaultTableModel(
@@ -204,11 +244,11 @@ public class MDINomina extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Cédula", "Nombre", "Salario", "Licencia"
+                "Cédula", "Nombre", "Salario", "Licencia", "Cargo"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Double.class, java.lang.Boolean.class
+                java.lang.String.class, java.lang.String.class, java.lang.Double.class, java.lang.Boolean.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -224,18 +264,18 @@ public class MDINomina extends javax.swing.JFrame {
             .addGroup(jifListarEmpleadosLayout.createSequentialGroup()
                 .addGap(55, 55, 55)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 469, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(489, Short.MAX_VALUE))
         );
         jifListarEmpleadosLayout.setVerticalGroup(
             jifListarEmpleadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jifListarEmpleadosLayout.createSequentialGroup()
                 .addGap(84, 84, 84)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(499, Short.MAX_VALUE))
         );
 
         desktopPane.add(jifListarEmpleados);
-        jifListarEmpleados.setBounds(100, 30, 490, 390);
+        jifListarEmpleados.setBounds(100, 30, 800, 900);
 
         jifRegistrarEmpleado.setClosable(true);
         jifRegistrarEmpleado.setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
@@ -253,32 +293,90 @@ public class MDINomina extends javax.swing.JFrame {
             }
         });
 
+        lblNombre.setText("Nombre:");
+
+        lblCedula.setText("Cédula:");
+
+        lblSalario.setText("Salario:");
+
+        chkLicencia.setText("Licencia?");
+
+        lblTipoEmpleado.setText("Tipo de Empleado:");
+
+        cmbTipoEmpleado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Vigilante", "Operario", "Supervisor" }));
+        cmbTipoEmpleado.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmbTipoEmpleadoItemStateChanged(evt);
+            }
+        });
+        cmbTipoEmpleado.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                cmbTipoEmpleadoPropertyChange(evt);
+            }
+        });
+
+        lblHorasTrabajadas.setText("Horas Trabajadas:");
+
         javax.swing.GroupLayout jifRegistrarEmpleadoLayout = new javax.swing.GroupLayout(jifRegistrarEmpleado.getContentPane());
         jifRegistrarEmpleado.getContentPane().setLayout(jifRegistrarEmpleadoLayout);
         jifRegistrarEmpleadoLayout.setHorizontalGroup(
             jifRegistrarEmpleadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jifRegistrarEmpleadoLayout.createSequentialGroup()
+                .addContainerGap(113, Short.MAX_VALUE)
                 .addGroup(jifRegistrarEmpleadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jifRegistrarEmpleadoLayout.createSequentialGroup()
-                        .addGap(113, 113, 113)
-                        .addComponent(btnRegistrar))
-                    .addGroup(jifRegistrarEmpleadoLayout.createSequentialGroup()
-                        .addGap(88, 88, 88)
-                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(128, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jifRegistrarEmpleadoLayout.createSequentialGroup()
+                        .addGroup(jifRegistrarEmpleadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblSalario)
+                            .addComponent(lblCedula)
+                            .addComponent(lblNombre)
+                            .addComponent(lblTipoEmpleado)
+                            .addComponent(lblHorasTrabajadas))
+                        .addGap(18, 18, 18)
+                        .addGroup(jifRegistrarEmpleadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jifRegistrarEmpleadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(chkLicencia)
+                                .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE)
+                                .addComponent(txtCedula)
+                                .addComponent(txtSalario)
+                                .addComponent(cmbTipoEmpleado, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(spnHorasTrabajadas, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(179, 179, 179))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jifRegistrarEmpleadoLayout.createSequentialGroup()
+                        .addComponent(btnRegistrar)
+                        .addGap(205, 205, 205))))
         );
         jifRegistrarEmpleadoLayout.setVerticalGroup(
             jifRegistrarEmpleadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jifRegistrarEmpleadoLayout.createSequentialGroup()
-                .addGap(38, 38, 38)
-                .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 132, Short.MAX_VALUE)
+                .addGap(60, 60, 60)
+                .addGroup(jifRegistrarEmpleadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblNombre))
+                .addGap(24, 24, 24)
+                .addGroup(jifRegistrarEmpleadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblCedula)
+                    .addComponent(txtCedula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jifRegistrarEmpleadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblSalario)
+                    .addComponent(txtSalario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jifRegistrarEmpleadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblTipoEmpleado)
+                    .addComponent(cmbTipoEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jifRegistrarEmpleadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblHorasTrabajadas)
+                    .addComponent(spnHorasTrabajadas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(chkLicencia)
+                .addGap(18, 18, 18)
                 .addComponent(btnRegistrar)
-                .addGap(77, 77, 77))
+                .addContainerGap(94, Short.MAX_VALUE))
         );
 
         desktopPane.add(jifRegistrarEmpleado);
-        jifRegistrarEmpleado.setBounds(180, 20, 440, 340);
+        jifRegistrarEmpleado.setBounds(180, 20, 440, 440);
 
         mnuArchivo.setMnemonic('f');
         mnuArchivo.setText("Inicio");
@@ -385,13 +483,53 @@ public class MDINomina extends javax.swing.JFrame {
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         // TODO add your handling code here:
-        Empleado raul = new Vigilante("1053873317","Raúl Carmona",1300000,false);
+       ///IMplementar las excepciones de negocio
+       //Campos obligatorios
+       // Salario positivo , capturar si ingresan letras en el salario
+       //Tipo de empleado
+       
+       Empleado empleadoAdicionar=null;
+       
+       switch(cmbTipoEmpleado.getSelectedIndex())
+       {
+           case 0:
+               empleadoAdicionar=
+                       new Vigilante(txtCedula.getText(), 
+                               txtNombre.getText(), 
+                               Double.parseDouble(txtSalario.getText()), 
+                               chkLicencia.isSelected());
+               break;
+           case 1:
+               int horasT=Integer.parseInt(
+                       spnHorasTrabajadas.getValue().toString());
+               empleadoAdicionar=
+                       new Operario(horasT,
+                               txtCedula.getText(), 
+                               txtNombre.getText(),                               
+                               chkLicencia.isSelected());
+               break;
+           case 2:
+               empleadoAdicionar= new Supervisor(txtCedula.getText(), 
+                               txtNombre.getText(), 
+                               Double.parseDouble(txtSalario.getText()), 
+                               chkLicencia.isSelected());
+       }        
         
-       String mensaje= controlNomina.adicionarEmpleado(raul);
+       String mensaje= controlNomina.adicionarEmpleado(empleadoAdicionar);
        llenarEmpleados();
        JOptionPane.showMessageDialog(rootPane, mensaje);
         
     }//GEN-LAST:event_btnRegistrarActionPerformed
+
+    private void cmbTipoEmpleadoPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_cmbTipoEmpleadoPropertyChange
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_cmbTipoEmpleadoPropertyChange
+
+    private void cmbTipoEmpleadoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbTipoEmpleadoItemStateChanged
+        // TODO add your handling code here:
+        evaluarComboTipoEmpleado();
+    }//GEN-LAST:event_cmbTipoEmpleadoItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -431,12 +569,19 @@ public class MDINomina extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnIngresar;
     private javax.swing.JButton btnRegistrar;
+    private javax.swing.JCheckBox chkLicencia;
+    private javax.swing.JComboBox<String> cmbTipoEmpleado;
     private javax.swing.JDesktopPane desktopPane;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JInternalFrame jifListarEmpleados;
     private javax.swing.JInternalFrame jifLogin;
     private javax.swing.JInternalFrame jifRegistrarEmpleado;
+    private javax.swing.JLabel lblCedula;
     private javax.swing.JLabel lblContrasenia;
+    private javax.swing.JLabel lblHorasTrabajadas;
+    private javax.swing.JLabel lblNombre;
+    private javax.swing.JLabel lblSalario;
+    private javax.swing.JLabel lblTipoEmpleado;
     private javax.swing.JLabel lblUsuario;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenu mnuArchivo;
@@ -444,10 +589,13 @@ public class MDINomina extends javax.swing.JFrame {
     private javax.swing.JMenuItem mnuCrearEmpleado;
     private javax.swing.JMenuItem mnuListarEmpleados;
     private javax.swing.JMenuItem mnuSalir;
+    private javax.swing.JSpinner spnHorasTrabajadas;
     private javax.swing.JTable tblEmpleados;
+    private javax.swing.JTextField txtCedula;
     private javax.swing.JPasswordField txtContrasenia;
     private javax.swing.JTextField txtCorreo;
     private javax.swing.JTextField txtNombre;
+    private javax.swing.JTextField txtSalario;
     // End of variables declaration//GEN-END:variables
 
 }

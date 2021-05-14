@@ -32,6 +32,9 @@ public class ControladorNomina {
         empleados[0]= new Vigilante("1111111","Ramón Roncancio",
                     1200000,false);
         contEmpleados++;
+        
+        empleados[1]= new Operario(12,"22222222","Pedro Pérez",false);
+        contEmpleados++;
     }
     
     public String adicionarEmpleado(Empleado emp)
