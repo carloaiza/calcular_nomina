@@ -30,6 +30,9 @@ public class MDINomina extends javax.swing.JFrame {
     private Usuario usuarioAutenticado;
     private ControladorNomina controlNomina;
     
+    LineChartEx2 grafico = new LineChartEx2();
+        
+    
     /**
      * Creates new form MDINomina
      */
@@ -43,6 +46,11 @@ public class MDINomina extends javax.swing.JFrame {
         llenarEmpleados();
         cmbTipoEmpleado.setSelectedIndex(0);
         evaluarComboTipoEmpleado();
+        grafico.setIconifiable(true);
+        grafico.setClosable(true);
+        grafico.setDefaultCloseOperation(HIDE_ON_CLOSE);        
+        desktopPane.add(grafico);
+        
     }
     
     private void evaluarComboTipoEmpleado()
@@ -172,6 +180,7 @@ public class MDINomina extends javax.swing.JFrame {
         mnuListarEmpleados = new javax.swing.JMenuItem();
         mnuCrearEmpleado = new javax.swing.JMenuItem();
         mnuCalcularNomina = new javax.swing.JMenuItem();
+        mnuVerGrafico = new javax.swing.JMenuItem();
         mnuSalir = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -322,7 +331,7 @@ public class MDINomina extends javax.swing.JFrame {
         jifRegistrarEmpleadoLayout.setHorizontalGroup(
             jifRegistrarEmpleadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jifRegistrarEmpleadoLayout.createSequentialGroup()
-                .addContainerGap(113, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jifRegistrarEmpleadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jifRegistrarEmpleadoLayout.createSequentialGroup()
                         .addGroup(jifRegistrarEmpleadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -372,7 +381,7 @@ public class MDINomina extends javax.swing.JFrame {
                 .addComponent(chkLicencia)
                 .addGap(18, 18, 18)
                 .addComponent(btnRegistrar)
-                .addContainerGap(94, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         desktopPane.add(jifRegistrarEmpleado);
@@ -403,6 +412,14 @@ public class MDINomina extends javax.swing.JFrame {
         mnuCalcularNomina.setMnemonic('a');
         mnuCalcularNomina.setText("CalcularNomina");
         mnuArchivo.add(mnuCalcularNomina);
+
+        mnuVerGrafico.setText("Abrir Grafico");
+        mnuVerGrafico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuVerGraficoActionPerformed(evt);
+            }
+        });
+        mnuArchivo.add(mnuVerGrafico);
 
         mnuSalir.setMnemonic('x');
         mnuSalir.setText("Salir");
@@ -531,6 +548,13 @@ public class MDINomina extends javax.swing.JFrame {
         evaluarComboTipoEmpleado();
     }//GEN-LAST:event_cmbTipoEmpleadoItemStateChanged
 
+    private void mnuVerGraficoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuVerGraficoActionPerformed
+        // TODO add your handling code here:        
+        grafico.show();
+        
+        
+    }//GEN-LAST:event_mnuVerGraficoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -589,6 +613,7 @@ public class MDINomina extends javax.swing.JFrame {
     private javax.swing.JMenuItem mnuCrearEmpleado;
     private javax.swing.JMenuItem mnuListarEmpleados;
     private javax.swing.JMenuItem mnuSalir;
+    private javax.swing.JMenuItem mnuVerGrafico;
     private javax.swing.JSpinner spnHorasTrabajadas;
     private javax.swing.JTable tblEmpleados;
     private javax.swing.JTextField txtCedula;
